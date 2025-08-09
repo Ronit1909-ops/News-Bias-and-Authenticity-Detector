@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News Bias Detector</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>News Bias Detector</h1>
+      <p class="subtitle">Paste news text to analyze predicted bias</p>
+    </header>
+
+    {% if errors and errors|length > 0 %}
+      <div class="alert">
+        <strong>Issues detected:</strong>
+        <ul>
+          {% for err in errors %}
+            <li>{{ err }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <form method="post" action="/predict" class="card">
+      <label for="text">Article text</label>
+      <textarea id="text" name="text" rows="10" placeholder="Paste article text here...">{{ input_text }}</textarea>
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if prediction %}
+      <div class="result card">
+        <h2>Prediction</h2>
+        <p class="prediction">{{ prediction }}</p>
+      </div>
+    {% endif %}
+
+    <footer>
+      <a href="/health" target="_blank">Health</a>
+    </footer>
+  </div>
+</body>
+</html>
